@@ -3,7 +3,7 @@ const UserModel = require('../modules/userModule');
 const createUser = async(req, res) => {
     try {
         console.log("user : ",{...UserModel});
-        let user =  UserModel.create(req.body);
+        let user = await UserModel.create(req.body);
         if(!user) {
             res.status(400).json({
                 status:"failure"
@@ -18,9 +18,9 @@ const createUser = async(req, res) => {
     }
 }
 
-const getUsers = async(req, res) =>{
+const getUsers = async(req, res) => {
     try {
-        let user =  UserModel.find();
+        let user = await UserModel.find();
         if(!user) {
             res.status(400).json({
                 status:"failure"
