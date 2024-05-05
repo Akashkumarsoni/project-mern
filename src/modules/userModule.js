@@ -9,22 +9,22 @@ const userSchemaObj = {
     email: {
         type: String,
         required: true,
-        // unique: true 
+        unique: true 
     },
 
     password:{
         type: String,
         required: true,
-        // minlength: 8
+        minlength: 8
     },
 
     confirmPassword: {
         type: String,
         required: true,
-        // minlength: 8,
-        // validate: function(){
-        //     return this.password === this.confirmPassword
-        // }
+        minlength: 8,
+        validate: function(){
+            return this.password === this.confirmPassword
+        }
     },
 
     createdAt: {
