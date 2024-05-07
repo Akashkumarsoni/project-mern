@@ -27,8 +27,13 @@ const updateProduct = async (req, res) => {
 const getProductHandler = async (req, res) => {
   try {
     const query = req.query;
-    const sortParams = query.sort;
+    const sortParams = query.sort;    
+    const selectParams = query.select;
+    const page = query.page || 1;
+    const limit = query.limit || 1;
+    const skip = (page-1)*limit;
     let queryResponsePromise = ProductModel.find();
+    // Fro Sorting
     if (sortParams) {
       const [sortParam, order] = sortParams.split(" ");
       if (order === "asc") {
@@ -37,6 +42,12 @@ const getProductHandler = async (req, res) => {
         queryResponsePromise = queryResponsePromise.sort(`-${sortParam}`);
       }
     }
+    // For Selection
+    if(selectParams) {
+      queryResponsePromise = queryResponsePromise.select(selectParams);
+    }
+    // For Pagination
+      queryResponsePromise = queryResponsePromise.skip(skip).limit(limit);
     const result = await queryResponsePromise;
     res.status(200).json({
       message: "Get products successfully",
