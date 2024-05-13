@@ -57,6 +57,21 @@ const getProductHandler = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+const getProductCategories = async (req,res) => {
+  console.log("first")
+  try{
+      await res.status(200).json({
+      message: "Get products successfully",
+      data: ['electronics',"men's clothing","women's clothing",'jewellery',],
+    });
+  } catch(e) {
+    await res.status(200).json({
+      message: e,
+    });
+  }
+  
+}
 module.exports = {
   createProduct,
   getProducts,
@@ -64,4 +79,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getProductHandler,
+  getProductCategories
 };
