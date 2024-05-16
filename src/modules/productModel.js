@@ -5,7 +5,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, "Product name is required"],
     unique: [true, "Product name is unique"],
-    maxlength: [40, "Product name should be less than 40 characters"],
+    maxlength: [100, "Product name should be less than 100 characters"],
   },
   price: {
     type: Number,
@@ -17,8 +17,8 @@ const productSchema = new mongoose.Schema({
       message: "Price of the product should be greater than 0",
     },
   },
-  categories: {
-    type: [String],
+  category: {
+    type: String,
     required: true,
   },
   averageRating: Number,
@@ -34,7 +34,7 @@ const productSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, "Please prvide the decription"],
-    maxlength: [400, "Product description should be less than 400 characters"],
+    maxlength: [4000, "Product description should be less than 4000 characters"],
   },
   stock: {
     type: Number,
@@ -54,6 +54,7 @@ const productSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  image :String
 });
 
 const ProductModel = new mongoose.model("ProductModel", productSchema);

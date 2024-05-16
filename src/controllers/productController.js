@@ -62,10 +62,12 @@ const getProductHandler = async (req, res) => {
 
 const getProductCategories = async (req,res) => {
   try{
+    console.log("Category")
       await res.status(200).json({
         success: true,
         message: "Get products successfully",
-        data: ["electronics", "men's clothing", "women's clothing", "jewellery"],
+        // data: ["electronics", "men's clothing", "women's clothing", "jewellery"],
+        data : ["Cloths","Electronics"]
       });
   } catch(e) {
     await res.status(200).json({
