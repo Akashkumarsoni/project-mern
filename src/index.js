@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require('./routes/userRoutes')
 const productRoutes = require("./routes/productRoutes");
+const paymentRoutes = require("./routes/bookingRoutes");
+
 const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
@@ -22,6 +24,7 @@ app.use(express.json());
 app.use("/api/user",userRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/payment", paymentRoutes);
 
 app.listen(PORT,()=>{
     console.log("Working...",'http://localhost:3000');

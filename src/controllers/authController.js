@@ -30,7 +30,7 @@ const loginController = async (req, res, next) => {
     });
   }
   twilio=`4KX2SPLK1L2QEXD7BQBL33FE`
-  const isPwdSame = password === user.password;
+  const isPwdSame = password === user?.password;
   try {
     if (isPwdSame) {
       try {
