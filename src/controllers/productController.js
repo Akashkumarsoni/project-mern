@@ -5,7 +5,26 @@ const createProduct = createFactory(ProductModel);
 const getProducts = getFactory(ProductModel);
 const getProductbyId = getFactoryDatabyId(ProductModel);
 const deleteProduct = deleteFactoryData(ProductModel);
-
+const getProductbyCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const query = req.query;
+    console.log(query,res)
+    let data = await Model.find({category:"men's clothing"});
+    if (!data) {
+      res.status(400).json({
+        status: "failure",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "Data found!",
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error", error: error });
+  }
+}
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -27,7 +46,6 @@ const updateProduct = async (req, res) => {
 
 const getProductHandler = async(req, res) => {
   try {
-    console.log("req",req)
       const query = req.query;
       const sortParams = query.sort;
       const selectParams = query.select;
@@ -99,5 +117,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getProductHandler,
-  getProductCategories
+  getProductCategories,
+  getProductbyCategory
 };
