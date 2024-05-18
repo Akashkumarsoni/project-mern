@@ -5,25 +5,17 @@ const bookingSchemaRules = {
     type: Date,
     default: Date.now(),
   },
-  priceAtThatTime: {
-    type: Number,
-    required: true,
-  },
   status: {
     type: String,
     required: true,
     default: "pending",
     enum: ["pending", "failed", "success"],
   },
-  user: {
-    type: [mongoose.Schema.ObjectId],
-    required: true,
-    ref: "UserModel",
+  user:  {
+    type: String,
   },
   product: {
-    type: [mongoose.Schema.ObjectId],
-    required: true,
-    ref: "ProductModel",
+    type: Array
   },
   orderId: {
     type: String,

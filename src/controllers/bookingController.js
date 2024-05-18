@@ -4,13 +4,14 @@ const Razorpay = require("razorpay");
 const shortid = require("shortid");
 const crypto = require("crypto");
 const cors = require("cors");
+const BookingModel = require('../modules/orderModel');
+const { getFactory } = require('../utils/crudFactory');
 dotenv.config();
 const { PORT, PRIVATE_KEY, PUBLIC_KEY, WEBHOOK_SECRET } = process.env;
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-
+const getOrders = getFactory(BookingModel);
 const checkoutController = (req, res) => {
     try {
         var razorpayInstance = new Razorpay({
@@ -42,21 +43,28 @@ const checkoutController = (req, res) => {
         })
     }
 }
-const paymentVerificationController = (req,res)=>{
+const paymentVerificationController = async(req,res)=>{
+    console.log("all req",req.body);
     try {
         if(!WEBHOOK_SECRET) {
             throw new Error("Webhook secret not available.")
         }
         const {body, headers} = req;
-        console.log("body ",body)
-        console.log("body ",headers)
-
-        const freshSign = crypto.createHmac("sha256",WEBHOOK_SECRET).update(JSON.stringify(body)).digest('hex');
-        const razorpaySignature = headers["x-razorpay-signature"]
-        if(!razorpaySignature) {
-            throw new Error("x-razorpay-signature is not provided in header")
-        }
-        res.status(500).json({
+        const orderData  = {
+            bookedAt: body.date,
+            status: "success",
+            product: Object.values(req.body.products).map((e)=>e),
+            orderId: body.order_id,
+            user:body.user_id
+          };
+          console.log("order create",Object.values(req.body).map((e)=>e))
+        let data = await BookingModel.create(orderData);
+        console.log("Bookinres",data)
+        // const razorpaySignature = headers["x-razorpay-signature"]
+        // if(!razorpaySignature) {
+        //     throw new Error("x-razorpay-signature is not provided in header")
+        // }
+        res.status(201).json({
                 message:"Your order is placed successfully!",
                 success:true
             })
@@ -76,10 +84,10 @@ const paymentVerificationController = (req,res)=>{
         })
     }
 }
-
 module.exports = {
     checkoutController,
     paymentVerificationController,
+    getOrders
 }
 
 // ngrok http http://localhost:8080

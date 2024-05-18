@@ -24,7 +24,7 @@ app.use(express.json());
 app.use("/api/user",userRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/payment", paymentRoutes);
+app.use("/", paymentRoutes);
 
 app.listen(PORT,()=>{
     console.log("Working...",'http://localhost:3000');

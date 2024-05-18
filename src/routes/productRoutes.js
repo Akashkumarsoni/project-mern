@@ -17,7 +17,7 @@ router.get("/", getProducts);
 router.get("/:id", getProductbyId);
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
-router.get("/bigBillionDay", getProductHandler);
+router.get("/:category", getProductHandler);
 router.get("/categories", getProductCategories);
 
 
