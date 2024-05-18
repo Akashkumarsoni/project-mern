@@ -19,7 +19,7 @@ router.get("/", getProducts);
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
 router.get("/:category", getProductHandler);
-router.get("/categories", getProductCategories);
+router.get("/:categories", getProductCategories);
 // router.get('/:category',getProductbyCategory)
 
 
